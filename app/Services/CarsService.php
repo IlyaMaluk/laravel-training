@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Http\Requests\CreateCarRequest;
 use App\Models\Car;
 use App\Repositories\CarsRepository;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CarsService
 {
@@ -15,7 +15,7 @@ class CarsService
     {
     }
 
-    public function getCars(): Collection
+    public function getCars(): LengthAwarePaginator
     {
         return $this->carsRepository->getCars();
     }
@@ -23,5 +23,10 @@ class CarsService
     public function createCar(array $data): Car
     {
         return $this->carsRepository->store($data);
+    }
+
+    public function updateCar(array $data, Car $car): Car
+    {
+        return $this->carsRepository->update($data, $car);
     }
 }
