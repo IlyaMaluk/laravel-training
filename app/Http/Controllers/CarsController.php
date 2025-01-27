@@ -33,14 +33,14 @@ class CarsController extends Controller
         ], ResponseAlias::HTTP_CREATED);
     }
 
-    public function update(Car $car, UpdateCarRequest $request): JsonResponse
+    public function update(UpdateCarRequest $request, Car $car): JsonResponse
     {
         $validatedData = $request->validated();
 
         $car = $this->carsService->updateCar($validatedData, $car);
 
         return response ()->json([
-            'car' => $this->update($car, $validatedData),
+            'car' => $this->carsService->updateCar($validatedData, $car),
         ]);
     }
 }
