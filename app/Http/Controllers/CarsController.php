@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCarRequest;
 use App\Models\Car;
 use App\Services\CarsService;
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class CarsController extends Controller
 {
@@ -29,7 +30,7 @@ class CarsController extends Controller
 
         return response()->json([
             'data' => $car,
-        ], 201);
+        ], ResponseAlias::HTTP_CREATED);
     }
 
     public function update(Car $car, UpdateCarRequest $request): JsonResponse
@@ -38,6 +39,8 @@ class CarsController extends Controller
 
         $car = $this->carsService->updateCar($validatedData, $car);
 
-        return response()->json($this->carsService->updateCar($validatedData, $car));
+        return response ()->json([
+            'car' => $this->update($car, $validatedData),
+        ]);
     }
 }

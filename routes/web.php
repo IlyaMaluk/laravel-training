@@ -9,13 +9,16 @@ Route::get('/', function () {
 });
 
 Route::controller(CarsController::class)->group(function () {
-    Route::get('/cars', [CarsController::class, 'index']);
+    Route::prefix('/cars')->group(function ()
+    {
+        Route::get('/', [CarsController::class, 'index']);
 
-    Route::post('/cars', [CarsController::class, 'store'])
-        ->withoutMiddleware(VerifyCsrfToken::class);
+        Route::post('/', [CarsController::class, 'store'])
+            ->withoutMiddleware(VerifyCsrfToken::class);
 
-    Route::put('/cars/{car}', [CarsController::class, 'update'])
-        ->withoutMiddleware(VerifyCsrfToken::class);
+        Route::put('/{car}', [CarsController::class, 'update'])
+            ->withoutMiddleware(VerifyCsrfToken::class);
+    });
 });
 
 
