@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCarRequest;
 use App\Http\Requests\UpdateCarRequest;
+use App\Http\Resources\CarResource;
 use App\Models\Car;
+use App\Repositories\CarsRepository;
 use App\Services\CarsService;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
@@ -19,7 +21,7 @@ class CarsController extends Controller
 
     public function index(): JsonResponse
     {
-        return response()->json($this->carsService->getCars());
+        return response()->json(CarResource::collection($this->carsService->getCars()));
     }
 
     public function store(CreateCarRequest $request): JsonResponse
@@ -28,9 +30,7 @@ class CarsController extends Controller
 
         $car = $this->carsService->createCar($validatedData);
 
-        return response()->json([
-            'data' => $car,
-        ], ResponseAlias::HTTP_CREATED);
+        return response()->json(new CarResource($car), ResponseAlias::HTTP_CREATED);
     }
 
     public function update(UpdateCarRequest $request, Car $car): JsonResponse
