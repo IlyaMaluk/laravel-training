@@ -1,0 +1,43 @@
+name: Laravel CI
+
+on:
+  push:
+    branches:
+      - stage
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: xdebug
+
+      - name: Install Composer Dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Copy .env
+        run: cp .env.example .env
+
+      - name: Generate App Key
+        run: php artisan key:generate
+
+      - name: Prepare SQLite Database
+        run: |
+          touch database/database.sqlite
+          php artisan migrate --force
+
+      - name: Install Node Dependencies & Build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Run Laravel tests (optional)
+        run: php artisan test
