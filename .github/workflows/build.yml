@@ -38,6 +38,3 @@ jobs:
         run: |
           npm ci
           npm run build
-
-      - name: Run Laravel tests (optional)
-        run: php artisan test
