@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Car;
 use App\Repositories\CarsRepository;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class CarsService
