@@ -43,4 +43,10 @@ class CarsController extends Controller
             'car' => $this->carsService->updateCar($validatedData, $car),
         ]);
     }
+
+    public function destroy(Car $car): JsonResponse
+    {
+        $car = $this->carsService->deleteCar($car);
+        return response()->json(new CarResource($car), ResponseAlias::HTTP_NO_CONTENT);
+    }
 }

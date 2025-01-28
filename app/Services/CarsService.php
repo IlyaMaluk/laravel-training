@@ -29,4 +29,9 @@ class CarsService
     {
         return $this->carsRepository->update($data, $car);
     }
+
+    public function deleteCar(Car $car): Car
+    {
+        return $this->carsRepository->delete($car);
+    }
 }

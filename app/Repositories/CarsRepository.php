@@ -25,4 +25,10 @@ class CarsRepository
         $car->update($data);
         return $car;
     }
+
+    public function delete(Car $car): Car
+    {
+        $car->delete();
+        return $car;
+    }
 }
