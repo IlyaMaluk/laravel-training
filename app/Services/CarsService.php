@@ -30,7 +30,7 @@ class CarsService
         return $this->carsRepository->update($data, $car);
     }
 
-    public function deleteCar(Car $car): Car
+    public function deleteCar(Car $car): bool
     {
         return $this->carsRepository->delete($car);
     }

@@ -21,7 +21,9 @@ class CarsController extends Controller
 
     public function index(): JsonResponse
     {
-        return response()->json(CarResource::collection($this->carsService->getCars()));
+        return response()->json([
+            'cars' => CarResource::collection($this->carsService->getCars())
+        ]);
     }
 
     public function store(CreateCarRequest $request): JsonResponse
@@ -30,7 +32,9 @@ class CarsController extends Controller
 
         $car = $this->carsService->createCar($validatedData);
 
-        return response()->json(new CarResource($car), ResponseAlias::HTTP_CREATED);
+        return response()->json([
+            'car' => new CarResource($car)
+        ], ResponseAlias::HTTP_CREATED);
     }
 
     public function update(UpdateCarRequest $request, Car $car): JsonResponse
@@ -39,14 +43,15 @@ class CarsController extends Controller
 
         $car = $this->carsService->updateCar($validatedData, $car);
 
-        return response ()->json([
+        return response()->json([
             'car' => $this->carsService->updateCar($validatedData, $car),
         ]);
     }
 
     public function destroy(Car $car): JsonResponse
     {
-        $car = $this->carsService->deleteCar($car);
-        return response()->json(new CarResource($car), ResponseAlias::HTTP_NO_CONTENT);
+        return response()->json([
+            'success' => $this->carsService->deleteCar($car)
+        ], ResponseAlias::HTTP_OK);
     }
 }

@@ -11,7 +11,7 @@ class CarsRepository
 {
     public function getCars(): LengthAwarePaginator
     {
-        return Car::query()->paginate(CarsPageSpecs::Elements->value);
+        return Car::query()->paginate(CarsPageSpecs::ELEMENTS->value);
     }
 
     public function store(array $data): Car
@@ -26,9 +26,8 @@ class CarsRepository
         return $car;
     }
 
-    public function delete(Car $car): Car
+    public function delete(Car $car): bool
     {
-        $car->delete();
-        return $car;
+        return $car->delete();
     }
 }

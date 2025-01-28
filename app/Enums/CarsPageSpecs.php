@@ -5,6 +5,6 @@ namespace App\Enums;
 
 enum CarsPageSpecs: int
 {
-    case Elements = 5;
+    case ELEMENTS = 5;
 }
 
